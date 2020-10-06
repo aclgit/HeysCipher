@@ -1,13 +1,13 @@
-cipher = open("a2q1ciphertext.txt", "r")
-plain = open("a2q1plaintext.txt", "r")
+cipher = open("/Users/jinbarai/Desktop/HeysCipher/a2q1ciphertext.txt", "r")
+plain = open("/Users/jinbarai/Desktop/HeysCipher/a2q1plaintext.txt", "r")
 # reading as a list of list
 ciphertext = [list(line) for line in cipher.read().splitlines()[1:]]
 plaintext = [list(line) for line in plain.read().splitlines()[1:]]
 
 # Mapping the inverse values of S-Boxes for Heys Cipher
 S = {14: 0, 4: 1, 13: 2, 1: 3, 2: 4, 15: 5, 11: 6, 8: 7, 3: 8, 10: 9, 6: 10, 12: 11, 5: 12, 9: 13, 0: 14, 7: 15}
-K = {1: '0000', 2: '0001', 3: '0010', 4: '0011', 5: '0100', 6: '0101', 7: '0110', 8: '1000', 9: '1001', 10: '1010',
-     11: '1011', 12: '1100', 13: '1101', 14: '1110', 15: '1111'}
+K = {0: '0000', 1: '0001', 2: '0010', 3: '0011', 4: '0100', 5: '0101', 6: '0110', 7: '0111', 8: '1000', 9: '1001',
+     10: '1010', 11: '1011', 12: '1100', 13: '1101', 14: '1110', 15: '1111'}
 
 
 # Return the XOR value between C & K as str
@@ -37,12 +37,15 @@ def safe(num):
 def main():
     bias = []
     key = []
-    for i in range(1, 17):
-        for j in range(1, 17):
+    for i in range(16):
+        for j in range(16):
             new_key = K[i] + K[j]
-            key = [list(line) for line in new_key]
-            bias.append(return_bias(key))
+            key = [int(line) for line in new_key]
+            val = return_bias(key)
+            # print(val)
+            bias.append(val)
     else:
+        # print(len(bias))
         return max(bias)
 
 
@@ -95,6 +98,7 @@ def check_xor(values):
     if result == 0:
         return True
     return False
+
 
 print(main())
 
