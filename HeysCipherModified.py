@@ -35,18 +35,19 @@ def safe(num):
 
 
 def main():
-    bias = []
-    key = []
+    bias = {}
     for i in range(16):
         for j in range(16):
             new_key = K[i] + K[j]
             key = [int(line) for line in new_key]
             val = return_bias(key)
             # print(val)
-            bias.append(val)
+            bias[val] = key
     else:
         # print(len(bias))
-        return max(bias)
+        result = max(bias.keys())
+        print(result)
+        print(bias[result])
 
 
 def return_bias(key):
@@ -100,7 +101,7 @@ def check_xor(values):
     return False
 
 
-print(main())
+main()
 
 # Closing the file
 cipher.close()
