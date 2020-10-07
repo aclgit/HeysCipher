@@ -63,18 +63,33 @@ def return_bias(key):
         # XOR K with V
         v = get_xor(c, key)
 
+        # Breaking up into 4 chunks
+        v1 = v[:4]
+        v2 = v[4:8]
+        v3 = v[8:12]
+        v4 = v[12:]
+
         # bin -> dec
-        r1 = int(v, 2)
+        r1 = int(v1, 2)
+        r2 = int(v2, 2)
+        r3 = int(v3, 2)
+        r4 = int(v4, 2)
 
         # Back to binary after using the look up table
         # S inverse box -> binary
         result1 = safe(format(S[r1], "b"))
+        result2 = safe(format(S[r2], "b"))
+        result3 = safe(format(S[r3], "b"))
+        result4 = safe(format(S[r4], "b"))
+
+        result = result1 + result2 + result3 + result4
 
         # Converting to int
-        l = [int(x) for x in result1]
+        u = [int(x) for x in result]
 
         # Extracting only necessary values and storing in a list
-        res = []
+        res = [u[1], u[5], u[9], u[13], p[0], p[3], p[8], p[11]]
+
         # XOR all the values in the above list to check if it satisfies the condition
         if check_xor(res):
             total += 1
